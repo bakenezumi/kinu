@@ -12,5 +12,6 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/vincent-petithory/dataurl v0.0.0-20191104211930-d1553a71de50
 	github.com/zenazn/goji v1.0.1
+	golang.org/x/sys v0.8.0 // indirect
 	gopkg.in/gographics/imagick.v2 v2.6.0
 )
