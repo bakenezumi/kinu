@@ -20,12 +20,12 @@ RUN wget $LIBJPEG_DPKG_URL -O libjpeg-turbo-official_${LIBJPEG_VERSION}_amd64.de
     rm -rf /tmp/*
 
 ENV IMAGE_MAGICK_VERSION=6.9.12-30
-RUN wget https://download.imagemagick.org/ImageMagick/download/releases/ImageMagick-${IMAGE_MAGICK_VERSION}.tar.gz && \
-    tar xvzf ImageMagick-${IMAGE_MAGICK_VERSION}.tar.gz && \
+RUN wget https://download.imagemagick.org/ImageMagick/download/releases/ImageMagick-${IMAGE_MAGICK_VERSION}.tar.xz && \
+    tar xvf ImageMagick-${IMAGE_MAGICK_VERSION}.tar.xz && \
     cd ImageMagick-${IMAGE_MAGICK_VERSION} && ./configure &&  make  && make install && ldconfig && \
     rm -rf /tmp/*
 
-ENV GOLANG_VERSION 1.16.5
+ENV GOLANG_VERSION 1.17.13
 ENV GOROOT /usr/local/go
 ENV GOPATH /usr/local/go/vendor
 
