@@ -254,9 +254,5 @@ func (s *BackwardCompatibleS3StorageItem) Extension() string {
 
 // KeyFormat: :image_type/:id/:id.original.:date.:format or :image_type/:id/:id.:format
 func (s *BackwardCompatibleS3StorageItem) ImageSize() string {
-	if strings.Contains(s.Key(), "original") {
-		return "original"
-	} else {
-		return "1000"
-	}
+	return "original"
 }

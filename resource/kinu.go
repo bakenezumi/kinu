@@ -41,19 +41,7 @@ func (r *KinuResource) BasePath() string {
 
 func (r *KinuResource) Fetch(geo *resizer.Geometry) (*Image, error) {
 	var middleImageSize string
-	if geo.NeedsOriginalImage {
-		middleImageSize = "original"
-	} else if len(geo.MiddleImageSize) != 0 {
-		middleImageSize = geo.MiddleImageSize
-	} else if geo.Height <= 1000 && geo.Width <= 1000 {
-		middleImageSize = "1000"
-	} else if geo.Height <= 2000 && geo.Width <= 2000 {
-		middleImageSize = "2000"
-	} else if geo.Height <= 3000 && geo.Width <= 3000 {
-		middleImageSize = "3000"
-	} else {
-		middleImageSize = "original"
-	}
+	middleImageSize = "original"
 
 	image := &Image{}
 

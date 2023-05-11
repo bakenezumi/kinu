@@ -35,11 +35,7 @@ var (
 )
 
 func (r *BackwardCompatibleResource) FilePath(size string) string {
-	if size == "1000" {
-		return fmt.Sprintf("%s/%s.jpg", r.BasePath(), r.Id)
-	} else {
-		return fmt.Sprintf("%s/%s.original.%s.jpg", r.BasePath(), r.Id, time.Now().Format("20060102150405"))
-	}
+	return fmt.Sprintf("%s/%s.original.%s.jpg", r.BasePath(), r.Id, time.Now().Format("20060102150405"))
 }
 
 func (r *BackwardCompatibleResource) RecentOriginalFileKey() (string, error) {
@@ -77,20 +73,6 @@ func (r *BackwardCompatibleResource) BasePath() string {
 }
 
 func (r *BackwardCompatibleResource) Fetch(geo *resizer.Geometry) (*Image, error) {
-	var middleImageSize string
-	if geo.NeedsOriginalImage {
-		middleImageSize = "original"
-	} else if len(geo.MiddleImageSize) != 0 {
-		middleImageSize = geo.MiddleImageSize
-	} else if geo.Height <= 1000 && geo.Width <= 1000 {
-		middleImageSize = "1000"
-	} else if geo.Height <= 2000 && geo.Width <= 2000 {
-		middleImageSize = "2000"
-	} else if geo.Height <= 3000 && geo.Width <= 3000 {
-		middleImageSize = "3000"
-	} else {
-		middleImageSize = "original"
-	}
 
 	image := &Image{}
 
@@ -100,15 +82,7 @@ func (r *BackwardCompatibleResource) Fetch(geo *resizer.Geometry) (*Image, error
 	}
 
 	var path string
-	if middleImageSize == "1000" {
-		path = r.FilePath(middleImageSize)
-	} else {
-		path, err = r.RecentOriginalFileKey()
-		if err != nil {
-			// There are cases where there is no original image and only an intermediate image exists.
-			path = r.FilePath("1000")
-		}
-	}
+	path = r.FilePath("original")
 
 	obj, err := st.Fetch(path)
 	if err != nil {
@@ -219,7 +193,7 @@ func (r *BackwardCompatibleResource) Store(file io.ReadSeeker) error {
 	}
 
 	uploaders := make([]uploader.Uploader, 0)
-	for _, size := range []string{"original", "1000"} {
+	for _, size := range []string{"original"} {
 		uploaders = append(uploaders, &uploader.ImageUploader{
 			ImageBlob:   imageData,
 			Path:        r.FilePath(size),

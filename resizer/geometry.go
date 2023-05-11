@@ -60,7 +60,7 @@ const (
 )
 
 var (
-	MiddleImageSizes = []string{"original", "1000", "2000", "3000"}
+	MiddleImageSizes = []string{"original"}
 )
 
 func ParseGeometry(geo string) (*Geometry, error) {
@@ -196,16 +196,7 @@ func ParseGeometry(geo string) (*Geometry, error) {
 				return nil, &ErrInvalidGeometryOrderRequest{Message: "geometry m must be fixed order."}
 			}
 			pos = GEO_MIDDLE
-			if cond[1] == "true" {
-				middleImageSize = "1000"
-			} else {
-				for _, size := range MiddleImageSizes {
-					if cond[1] == size {
-						middleImageSize = cond[1]
-						break
-					}
-				}
-			}
+			middleImageSize = "original"
 			if len(middleImageSize) == 0 {
 				return nil, &ErrInvalidGeometry{Message: "must specify valid middle image size."}
 			}
